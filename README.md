@@ -1,6 +1,6 @@
 # Telegram join request bot
 
-How to approve Telegram join requests automatically, with a bot that also sends each new member one welcome message. This repository is a guide. It holds no code. The bot is Join Approve, [@JoinApproveProBot](https://t.me/JoinApproveProBot?start=github), and it runs on our side, so there is nothing to host.
+Approving Telegram join requests one at a time stops working the first time a promoted post brings a few hundred people. This repository is the written guide to doing it automatically, with a bot that approves each request and sends the new member one welcome message. It holds no code. The bot is Join Approve, [@JoinApproveProBot](https://t.me/JoinApproveProBot?start=github), and it runs on our side, so there is nothing to host.
 
 ## What a join request is
 
@@ -31,6 +31,18 @@ Powered by @JoinApproveProBot
 
 A button under it reads Auto-approve for your channel and opens the bot. The bot reads the language of the person's Telegram app and sends the text in one of 11 languages, with English as the fallback.
 
+## When nothing gets approved
+
+The usual cause is a missing admin right, not a broken bot. Walk these checks in order.
+
+The bot is still an admin in the chat and still has Invite users. A bot promoted before it had that right, or a bot demoted after a Telegram app update, receives no requests at all and the queue stays with the admins. Open the chat, then Administrators, then the bot, and compare the switch with the list above.
+
+The link people are using has Request Admin Approval on. Channels often keep an old open link next to the new one, and the old link lets people in without a request. Open Invite Links, find the link you actually posted, and check the switch.
+
+Approval is not paused. Send `/setup`, pick the chat and look at the approval line. Pausing keeps the bot in the chat and holds every request, which looks the same as a broken bot from outside.
+
+If all three look right, the request was probably approved and only the welcome is missing. The next section explains the three cases where that happens.
+
 ## The rate
 
 Join Approve approves every request at once. It sends at most 20 welcome messages a minute for one chat. If more than 20 people arrive in the same minute, all of them are approved and only the welcome is skipped for the extra people. A channel that gets 600 requests an hour averages 10 a minute, so everyone is welcomed. A burst of 200 requests in two minutes approves all 200 and welcomes the first 20 in each minute.
@@ -51,36 +63,24 @@ A welcome can also be missing because the request was more than 5 minutes old wh
 
 Pro is per chat. It costs 150 Stars once, about $3. A chat with 500 or more members is offered 300 Stars per 30 days instead. You pay in a private chat with the bot, never in the channel. Once the bot has been in a chat for 24 hours, `/setup` offers one free 24 hour trial of Pro.
 
-## FAQ
+## Questions
 
-### Does it work for channels and for groups?
+Channels and groups both work. Add the bot as an admin with the right to add members, and it handles join requests for either.
 
-Yes, both. Add it as an admin with the right to add members, and it handles join requests for either.
+The welcome can be switched off per chat. Open `/setup` in a private chat with the bot, pick the chat and switch the welcome off. Requests are still approved.
 
-### Can I switch the welcome message off?
+Nothing is screened. Every request is approved. If you want to look at each person, approve by hand.
 
-Yes. Open `/setup` in a private chat with the bot, pick the chat and switch the welcome off. Requests are still approved.
+At 500 members the free plan keeps working with no limit on approvals. The Pro offer for that chat becomes 300 Stars per 30 days instead of 150 Stars once. Nothing changes until you choose to pay.
 
-### Does it screen people?
+A member with no welcome falls into one of three cases, more than 20 arrivals in that minute, a request older than 5 minutes when the bot read it, or the welcome switched off. The request was approved all the same.
 
-No. Every request is approved. If you want to look at each person, approve by hand.
-
-### What happens at 500 members?
-
-The free plan keeps working with no limit on approvals. From 500 members, the Pro offer for that chat becomes 300 Stars per 30 days instead of 150 Stars once. Nothing changes until you choose to pay.
-
-### Why did a member get no welcome?
-
-Either more than 20 people arrived in that minute, the request was older than 5 minutes when the bot read it, or the welcome is switched off. The request was approved all the same.
-
-### Where is the code?
-
-The bot is hosted, so there is none here. This repository is the written guide.
+There is no code here to run. The bot is hosted, so this repository is the written guide.
 
 ## More
 
 - The bot, [@JoinApproveProBot](https://t.me/JoinApproveProBot?start=github)
-- The longer guide, [Telegram channel join requests and auto approval](https://addthisbot.com/guides/telegram-channel-join-requests/)
+- Accounts and channels, [Telegram channel join requests and auto approval](https://addthisbot.com/guides/telegram-channel-join-requests/)
 - The bot page, [addthisbot.com/bots/approver](https://addthisbot.com/bots/approver/)
 - Telegram on join requests, [core.telegram.org/api/invites](https://core.telegram.org/api/invites)
 
